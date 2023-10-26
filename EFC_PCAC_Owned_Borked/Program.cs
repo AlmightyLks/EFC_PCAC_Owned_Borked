@@ -7,7 +7,6 @@ using System.Text.Json;
 
 public class Program
 {
-    public static bool CanLog;
     public static void Main()
     {
         using (var ctx = new ExampleContext())
@@ -16,13 +15,8 @@ public class Program
         }
         SetupData();
 
-        CanLog = true;
-
-        Console.WriteLine("\n\n First Time: \n\n");
         WeirdBehaviour();
         PrintPerson();
-
-        CanLog = false;
 
         Cleanup();
     }
@@ -198,13 +192,7 @@ public class ExampleContext : DbContext
         optionsBuilder.EnableThreadSafetyChecks();
         optionsBuilder.LogTo(x =>
         {
-            if (!Program.CanLog)
-                return;
-
-            //var check = x.ToLower();
-            //if (check.Contains("insert") || check.Contains("update") || check.Contains("delete"))
-            if (x.Contains("Executing DbCommand"))
-                Console.WriteLine(x);
+            Console.WriteLine(x);
         });
     }
 
