@@ -15,12 +15,19 @@ public class Program
         }
         SetupData();
 
-        WeirdBehaviour();
-        PrintPerson();
+        try
+        {
+            CantSetOwnedEntity();
+            PrintPerson();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
 
         Cleanup();
     }
-    private static void WeirdBehaviour()
+    private static void CantSetOwnedEntity()
     {
         using var ctx = new ExampleContext();
         var person = ctx.People.First();
@@ -192,7 +199,7 @@ public class ExampleContext : DbContext
         optionsBuilder.EnableThreadSafetyChecks();
         optionsBuilder.LogTo(x =>
         {
-            Console.WriteLine(x);
+            //Console.WriteLine(x);
         });
     }
 
